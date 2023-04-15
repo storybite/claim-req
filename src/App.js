@@ -1,24 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import AccidentRadio from './components/AccidentRadio';
+import DsasName from './components/DsasName';
+import Label from './components/UI/Label';
+import KCD from './components/KCD';
+import AccidentDate from './components/AccidentDate';
+import DmndResnContainer from './components/DmndResn/DmnsResnContainer';
+import Hospital from './components/Hospital';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      hello!
+      <div>
+        <AccidentRadio/>
+        <DsasName/>
+        <Label title="사고원인결과"/>
+        <KCD></KCD><KCD></KCD><KCD></KCD>
+        <br/>
+        <AccidentDate/>        
+        <DmndResnContainer/>
+        <Hospital/>
+      </div>
+    </>
   );
 }
 
