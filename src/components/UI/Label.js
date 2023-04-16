@@ -1,14 +1,20 @@
 
-
+import styles from "./Label.module.css"
 
 const Label = (props) => {
 
+    let defaultStyle =  styles.label;
+
+    if(props.className !=null) {
+        defaultStyle = props.className;
+    }
+
+
     return (
         <>
-            <label htmlFor={props.id}>{props.title}</label>
+            <label className={defaultStyle} htmlFor={props.id}>{props.children}</label>
         </>
     )
-
 }
 
 export default Label;

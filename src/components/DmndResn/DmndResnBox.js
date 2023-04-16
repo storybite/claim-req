@@ -1,5 +1,6 @@
 import {useState} from "react"
 import Label from "../UI/Label"
+import classes from "./DmndResnBox.module.css"
 
 const DmndResnBox = (props) => {
 
@@ -11,8 +12,8 @@ const DmndResnBox = (props) => {
 
     return (
         <>
-            <Label id={props.title} title={props.title}/>
-            <input id={props.title} type="checkbox" name={props.name}  onChange={inputHandler} checked={isChecked}/>
+            <Label id={props.title}>{props.title}</Label>
+            <input className={classes.input} id={props.title} type="checkbox" name={props.name}  onChange={inputHandler} checked={isChecked}/>
         </>
     )
 

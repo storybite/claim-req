@@ -1,8 +1,12 @@
+import classes from "./AccidentDate.module.css"
 import {useState} from "react"
+import Label from "./UI/Label"
+import Input from "./UI/Input"
 
 const AccidentDate = (props) => {
 
-    const [accidntDate, setAccidentDate] = useState("")
+    const [accidentDate, setAccidentDate] = useState("")
+    const NAME = "accidentDate"
 
     const inputHandler = (evt) => {
         setAccidentDate(evt.target.value);
@@ -10,8 +14,8 @@ const AccidentDate = (props) => {
 
     return (
         <>
-            <label htmlFor="accidntDate">사고난 날짜</label>
-            <input id="accidntDate" type="date" name="accientDate" value={accidntDate} onChange={inputHandler}/>
+            <Label htmlFor="accidntDate">사고난 날짜</Label>
+            <Input dict={{id:NAME, type:"date", name:NAME, value:accidentDate, onChange:inputHandler}}/>
         </>
     )
 

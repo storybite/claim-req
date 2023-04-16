@@ -1,4 +1,8 @@
+import styles from "./KCD.module.css"
 import {useState} from "react"
+import DsasName from "./DsasName"
+import Label from "./UI/Label"
+import Input from "./UI/Input"
 
 const KCD = (props) => {
 
@@ -9,8 +13,8 @@ const KCD = (props) => {
     }
 
     return (
-        <>
-            <input id="kcd" type="text" name="dsasName" value={kcd} onChange={inputHandler}/>
+        <>            
+            <Input className={styles.kcdInput} dict={{id:"kcd", type:"text", name:"kcd", value:kcd, onChange:inputHandler}}/>
         </>
     )
 

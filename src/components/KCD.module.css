@@ -1,0 +1,8 @@
+.kcdInput {
+    font-size: 14px;
+    padding: 0.35rem;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    width: 50px;
+    margin: 0 0.2rem;
+}

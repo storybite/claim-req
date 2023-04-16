@@ -1,23 +1,28 @@
 import {useState} from "react"
-
+import styles from "./AccidentRadio.module.css"
+import Label from "./UI/Label"
+import Input from "./UI/Input"
 
 const AccidentRadio = (props) => {
-
     
     const [isDisease, setIsDisease] = useState(true)
 
     const radioHandler = (evt) => {
-        alert(evt.target.value)
         setIsDisease(evt.target.value == 'disease')
     }
+
+    
 
 
     return (
         <>
-            <label htmlFor="disease">질병</label>
-            <input id="disease" type="radio" name="accidentRadio" value="disease" checked={isDisease} onChange={radioHandler} />
-            <label htmlFor="disaster">재해</label>
-            <input id="disaster" type="radio" name="accidentRadio" value="disaster" checked={!isDisease} onChange={radioHandler}/>        
+            <Label>사고의 종류</Label>
+            <span className={styles.radioGroup}>
+                <Label htmlFor="disease">질병</Label>
+                <Input dict={{id:"disease", type:"radio", name:"disease", value:"disease", checked:isDisease, onChange:radioHandler}}/>
+                <Label htmlFor="disaster">재해</Label>
+                <Input dict={{id:"disaster", type:"radio", name:"disaster", value:"disaster", checked:!isDisease, onChange:radioHandler}}/>
+            </span>
         </>
     )
 

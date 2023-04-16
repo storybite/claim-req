@@ -1,13 +1,16 @@
+import classes from "./Hospital.module.css"
 import {useState} from "react"
+import Label from "./UI/Label"
+import Input from "./UI/Input"
+
 
 const Hospital = (props) => {
 
     const [hospital, setHospital] = useState(null)
+    const NAME = "hospital"
 
     const inputHandler = (evt) => {
         setHospital(evt.target.value);
-        alert(evt.target.value)
-        evt.target.blur();
     }
 
     const onBlurHandler = (evt) => {
@@ -16,9 +19,9 @@ const Hospital = (props) => {
 
     return (
         <>
-            <label>병원
-                <input type="text" name="hospital" value={hospital} onFocus={inputHandler} onBlur={onBlurHandler}/>
-            </label>
+            <Label htmlFor={hospital}>병원정보</Label>
+            <Input dict={{id:NAME, type:"text", name:NAME, value:hospital, onChange:inputHandler}}/>
+            
         </>
     )
 

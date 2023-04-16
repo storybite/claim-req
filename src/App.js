@@ -10,19 +10,19 @@ import Hospital from './components/Hospital';
 
 function App() {
   return (
-    <>
-      hello!
-      <div>
+      <form>
         <AccidentRadio/>
-        <DsasName/>
-        <Label title="사고원인결과"/>
-        <KCD></KCD><KCD></KCD><KCD></KCD>
-        <br/>
-        <AccidentDate/>        
+        <hr/>
+        <div>
+          <AccidentDate/>        
+          <DsasName/>
+          <Label>질병코드</Label>
+          <KCD/><KCD/><KCD/><KCD/>
+        </div>
+        <hr/>
         <DmndResnContainer/>
         <Hospital/>
-      </div>
-    </>
+      </form>
   );
 }
 
