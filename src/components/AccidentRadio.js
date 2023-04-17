@@ -1,18 +1,20 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import styles from "./AccidentRadio.module.css"
 import Label from "./UI/Label"
 import Input from "./UI/Input"
 
-const AccidentRadio = (props) => {
-    
-    const [isDisease, setIsDisease] = useState(true)
+const AccidentRadio = (props) => { 
+
+    const [isDisease, setIsDisease] = useState(false);
+
+    useEffect(()=>{
+        setIsDisease(props.data == "disease")
+    }, [])
 
     const radioHandler = (evt) => {
         setIsDisease(evt.target.value == 'disease')
+        props.onUpdateReqData({accidentKind : evt.target.value})
     }
-
-    
-
 
     return (
         <>

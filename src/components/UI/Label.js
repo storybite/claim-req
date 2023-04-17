@@ -12,7 +12,7 @@ const Label = (props) => {
 
     return (
         <>
-            <label className={defaultStyle} htmlFor={props.id}>{props.children}</label>
+            <label className={defaultStyle} htmlFor={props.htmlFor}>{props.children}</label>
         </>
     )
 }

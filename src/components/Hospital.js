@@ -6,7 +6,7 @@ import Input from "./UI/Input"
 
 const Hospital = (props) => {
 
-    const [hospital, setHospital] = useState(null)
+    const [hospital, setHospital] = useState("")
     const NAME = "hospital"
 
     const inputHandler = (evt) => {

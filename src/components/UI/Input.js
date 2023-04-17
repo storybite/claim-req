@@ -5,7 +5,6 @@ const Input = (props) => {
 
     let defaultStyle =  styles.input;
 
-
     if(props.className !=null) {
         defaultStyle = props.className;
     }
