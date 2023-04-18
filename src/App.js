@@ -1,12 +1,11 @@
-import logo from "./logo.svg";
 import "./App.css";
 import AccidentRadio from "./components/AccidentRadio";
 import DsasName from "./components/DsasName";
 import Label from "./components/UI/Label";
 import KCD from "./components/KCD";
 import AccidentDate from "./components/AccidentDate";
-import DmndResnContainer from "./components/DmndResn/DmnsResnContainer";
-import Hospital from "./components/Hospital";
+import ClaimResnContainer from "./components/claim/ClaimResnContainer";
+import Hospital from "./components/hosp/Hospital";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -17,8 +16,9 @@ function App() {
             // accidentDate : new Date(2023, 1, 1),
             accidentDate: "2023-04-01",
             dsasName: "맹장염",
-            kcd: ["A01", "A02", "A03", "A04"],
-            clamResn: ["hosp", "oper"],
+            kcd: ["A01", "B01", "C01", "D01"],
+            hospitalName: "세브란스병원",
+            claimResn: {tong:true, hosp:false, oper:false, dead:false}
         },
     ];
 
@@ -35,7 +35,7 @@ function App() {
         console.log("updateReqaDataHandler dict==> ", dict);
         const [key, val] = Object.entries(dict)[0];
         setReqData((prev) => {
-            const updatedReq = [...prev]            
+            const updatedReq = [...prev];
             updatedReq[0][key] = val;
             return updatedReq;
         });
@@ -43,20 +43,22 @@ function App() {
     };
 
     const updateKcdDataHandler = (dict) => {
-      console.log("updateReqaDataHandler dict==> ", dict);
-      const [key1, val1] = Object.entries(dict)[0];
-      const [key2, val2] = Object.entries(dict)[1];
-      setReqData((prev) => {
-          const updatedReq = [...prev]            
-          updatedReq[0][key1][val2] = val1;
-          return updatedReq;
-      });
-      console.log("updateReqaDataHandler3 rec==> ", rec);
-  };
+        console.log("updateReqaDataHandler dict==> ", dict);
+        const [key1, val1] = Object.entries(dict)[0];
+        const [key2, val2] = Object.entries(dict)[1];
+        setReqData((prev) => {
+            const updatedReq = [...prev];
+            updatedReq[0][key1][val2] = val1;
+            return updatedReq;
+        });
+        console.log("updateReqaDataHandler3 rec==> ", rec);
+    };
 
     const rec = reqData[0];
     console.log("rec==> ", rec);
-    rec.kcd.map((item, index)=>{console.log("kcdmap " + item + ", " + index)})
+    rec.kcd.map((item, index) => {
+        console.log("kcdmap " + item + ", " + index);
+    });
     return (
         <form>
             <AccidentRadio
@@ -73,14 +75,25 @@ function App() {
                     data={rec.dsasName}
                     onUpdateReqData={updateReqDataHandler}
                 />
-                <Label>질병코드</Label>{
-                  rec.kcd.map((item, index)=>
-                    <KCD key={index} itemIndex={index} data={item} onUpdateKcdData={updateKcdDataHandler}/>    
-                  )}
+                <Label>질병코드</Label>
+                {rec.kcd.map((item, index) => (
+                    <KCD
+                        key={index}
+                        itemIndex={index}
+                        data={item}
+                        onUpdateKcdData={updateKcdDataHandler}
+                    />
+                ))}
             </div>
             <hr />
-            {/* <DmndResnContainer/> */}
-            <Hospital />
+            <ClaimResnContainer
+                data={rec.claimResn}
+                onUpdateReqData={updateReqDataHandler}
+            />
+            <Hospital
+                data={rec.hospitalName}
+                onUpdateReqData={updateReqDataHandler}
+            />
         </form>
     );
 }
