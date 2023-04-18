@@ -8,6 +8,7 @@ import ClaimResnContainer from "./components/claim/ClaimResnContainer";
 import Hospital from "./components/hosp/Hospital";
 import { useEffect, useState } from "react";
 
+//feat1
 function App() {
     const reqDB = [
         {
@@ -18,7 +19,7 @@ function App() {
             dsasName: "맹장염",
             kcd: ["A01", "B01", "C01", "D01"],
             hospitalName: "세브란스병원",
-            claimResn: {tong:true, hosp:false, oper:false, dead:false}
+            claimResn: {tong:false, hosp:false, oper:false, dead:false}
         },
     ];
 
