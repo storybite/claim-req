@@ -9,7 +9,7 @@ const AccidentRadio = (props) => {
 
     useEffect(()=>{
         setIsDisease(props.data == "disease")
-    }, [])
+    }, [props.data])
 
     const radioHandler = (evt) => {
         setIsDisease(evt.target.value == 'disease')

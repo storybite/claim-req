@@ -1,8 +1,7 @@
-import styles from "./KCD.module.css";
+import styles from "./KCDBox.module.css";
 import { useEffect, useState } from "react";
-import Modal from "./UI/Modal";
-import Label from "./UI/Label";
-import Input from "./UI/Input";
+import Modal from "../UI/Modal";
+import Input from "../UI/Input";
 
 const debounce = (func, wait) => {
     let timeout;
@@ -125,7 +124,7 @@ const kcds = [
 
 const korName = { code: "표준질병분류코드", name: "질병명" };
 
-const KCD = (props) => {
+const KCDBox = (props) => {
 
     const data = kcds;
 
@@ -134,9 +133,9 @@ const KCD = (props) => {
 
     console.log("kcd key " + props.itemIndex);
 
-    useEffect(() => {
+    useEffect(() => {        
         setKcd(props.data);
-    }, []);
+    }, [props.data]);
 
     const inputHandler = (evt) => {
         setIsPopUped(!isPopUped)        
@@ -144,12 +143,12 @@ const KCD = (props) => {
 
     const rowClickHandler = (kcdCode, evt) => {
         console.log("evt " + evt.target)
-        setKcd(kcdCode);
-        setIsPopUped(!isPopUped)
         props.onUpdateKcdData({
-            kcd: evt.target.value,
+            kcd: kcdCode,
             itemIndex: props.itemIndex,
         });
+        setKcd(kcdCode);
+        setIsPopUped(!isPopUped)
     }
 
     const closeHandler = (evt) => {
@@ -210,4 +209,4 @@ const KCD = (props) => {
     );
 };
 
-export default KCD;
+export default KCDBox;

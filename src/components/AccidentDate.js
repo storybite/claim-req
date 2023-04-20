@@ -17,9 +17,12 @@ const AccidentDate = (props) => {
 
     // const [accidentDate, setAccidentDate] = useState(formatDate(new Date()))    
     const [accidentDate, setAccidentDate] = useState(props.data)    
+
+    console.log("useState accidentDate " + accidentDate)
+
     useEffect(()=>{
         console.log("accidntDate useEffect> ", accidentDate)
-        setAccidentDate(accidentDate)
+        setAccidentDate(props.data)
     },[props.data])
 
     const inputHandler = (evt) => {

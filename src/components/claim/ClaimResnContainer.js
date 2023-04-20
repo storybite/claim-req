@@ -12,6 +12,11 @@ const ClaimResnContainer = (props) => {
         props.onUpdateReqData({claimResn: claimResnGroup}) 
     }, [claimResnGroup])
 
+    useEffect(()=>{
+        //props.onUpdateReqData({claimResn: props.data}) 
+        setClaimResGroup(props.data)
+    }, [props.data])
+
     const updateClaimResnGroup = (entry) => {
         setClaimResGroup((prev)=>{
             const rtn = {...prev}
@@ -20,7 +25,7 @@ const ClaimResnContainer = (props) => {
         })
     }
 
-    console.log(props.data)
+    console.log("ClaimResnContainer props.data " + props.data)
 
     return (
         <>

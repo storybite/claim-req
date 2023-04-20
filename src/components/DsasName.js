@@ -8,7 +8,7 @@ const DsasName = (props) => {
 
     useEffect(()=>{
         setDsasName(props.data)
-    },[])
+    },[props.data])
 
     const inputHandler = (evt) => {
         setDsasName(evt.target.value);

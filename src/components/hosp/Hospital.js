@@ -59,7 +59,7 @@ const Hospital = (props) => {
 
     useEffect(()=>{
         setHospitalName(props.data)
-    }, [])
+    }, [props.data])
 
     const inputHandler = (evt) => {
         //setHospital(evt.target.value);
