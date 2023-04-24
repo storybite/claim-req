@@ -1,9 +1,6 @@
 import React from "react";
 import styles from "./ClaimList.module.css"
 
-let claimData0 = [
-    {no : "1000", date : "2023-04-25" , custName : '이승우', resn : '뇌경색', result : {code: "1", codeName:"지급"}},
-];
 
 let claimData = [
     {no : "1000", date : "2023-04-25" , custName : '이승우', resn : '뇌경색', result : "지급"},
@@ -15,23 +12,13 @@ let claimData = [
 
 const columnOrder = ['id', 'accidentDate', 'custName', 'dsasName', 'result']
 
-
 const ClaimList = (props) => {
 
     const rowClickHandler = (firstVal, evt) =>{
-        alert(evt)
+        props.onFormDataHandler(firstVal)
     }
 
     const clist = props.claimList;
-
-    //claimData = [clist.id, clist.accidentDate, "이승우", clist.dsasName, "지급"]
-
- 
-
-    clist.map(item=>{
-        item['custName']  = '이승우'
-        item['result']  = '지급'
-    })
 
     return (
         <div className={styles.tableWrapper}>
@@ -51,11 +38,11 @@ const ClaimList = (props) => {
                             key={index}
                             onClick={(evt) => {
                                     console.log('row:', row);
-                                    return rowClickHandler(Object.values(row)[0], evt)
+                                    return rowClickHandler(row.id, evt)
                                 }
                             }
                         >
-                            <td>{row["id"]}</td>
+                            <td>{row["no"]}</td>
                             <td>{row["accidentDate"]}</td>
                             <td>{row["custName"]}</td>
                             <td>{row["dsasName"]}</td>

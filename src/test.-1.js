@@ -1,3 +1,10 @@
+const maxInDictList = (dictList, key) => {
+    if(dictList.length == 0) {
+        return 0;
+    }
+    return Math.max(...dictList.map(item=>item[key]));
+}
+
 // const hospitals = [
 //     {
 //         name: "카톨릭 성모병원",
@@ -154,3 +161,27 @@ for (const [key, value] of Object.entries(v1)) {
     console.log(`${key}: ${value}`);
 }
   
+
+var a7 = [{name:"lsw", age:50},{name:"lsw2", age:60}]
+
+console.log(Math.max(a7.map(item=>item.age)));
+
+var a7 = a7.map(item=>item.age);
+console.log('a7:', Math.max(...a7));
+
+
+var a7 = [{name:"lsw", age:50},{name:"lsw2", age:60}]
+
+
+console.log(maxInDictList(a7, "age"));
+
+var a7 = []
+
+console.log('a7.length:', a7.length);
+
+
+function add(a, b=1) {
+    return a + b;
+}
+
+console.log('add(10):', add(10));

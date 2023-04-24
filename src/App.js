@@ -1,40 +1,18 @@
 import "./App.css";
-import AccidentRadio from "./components/AccidentRadio";
-import DsasName from "./components/DsasName";
-import KCDContainer from "./components/kcd/KCDContainer";
-import AccidentDate from "./components/AccidentDate";
-import ClaimResnContainer from "./components/claim/ClaimResnContainer";
-import ClaimList from "./components/claim/list/ClaimList";
-
-import Hospital from "./components/hosp/Hospital";
+import ClaimList from "./components/list/ClaimList";
+import comm from "./module/common";
 import { useEffect, useState } from "react";
-import Button from "./components/UI/Button";
 import { getData, postData, putData } from "./module/fetch";
+import Form from "./components/form/Form";
+import Account from "./components/account/Account";
 
-
-function formatDate(date) {
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-  
-    return `${year}-${month}-${day}`;
-}
-  
+let save;
 
 function App() {
-    const reqEmptyDB = {
-        id: null,
-        no : '0',
-        accidentKind: "disease",
-        accidentDate: formatDate(new Date()),
-        dsasName: "",
-        kcd: ["","","",""],
-        hospitalName: "",
-        claimResn: { tong: false, hosp: false, oper: false, dead: false },
-    };
-
-    const [reqData, setReqData] = useState([reqEmptyDB]);
+    const [reqData, setReqData] = useState([]);
+    const [formData, setFormData] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [formCount, setFormCount] = useState(0);
 
     useEffect(() => {
         setIsLoaded(false);
@@ -42,82 +20,61 @@ function App() {
     }, []);
 
     const fetchData = async () => {
-        const data = await getData(null);
-        if (data.length == 0) {
-            setReqData(reqEmptyDB);
+        const data = await getData();
+        if (data == null) {
         } else {
             setReqData(data);
         }
         setIsLoaded(true);
-    }
-
-    const updateReqDataHandler = (dict) => {
-        let v1 = reqData;
-        console.log("updateReqaDataHandler dict==> ", dict);
-        const [key, val] = Object.entries(dict)[0];
-        reqData[0][key] = val;
-        let v2 = reqData;
-        console.log("updateReqaDataHandler rec==> ", rec);
-        console.log("v1 === v2", v1===v2);
     };
 
-    const submitHandler = async (evt) => {
-        evt.preventDefault();
-        for (const req of reqData) {
-            if (req.id === null) {
-                req.id = await postData(req);
-                updateReqDataHandler({ id: req.id });
-            }
-            await putData(req, req.id);
+    const getMaxNo = () => {
+        console.log("maxInDict:", comm.maxInDictList(reqData, "no"));
+        return comm.maxInDictList(reqData, "no");
+    };
+
+    const formDataHandler = (id) => {
+
+        setFormCount(prev=>prev+1)
+
+        if (id == null) {
+            setFormData(null);
+            return
         }
-        alert("db 저장 성공!!");
-        fetchData();
-    };
 
-    // let rec = reqData[0];
-    let rec = reqEmptyDB;
+        save = formData;
+        const vData = reqData.filter((item) => item.id == id);
+        setFormData(vData[0]);
+        console.log("formData >:", formData);
+    };
 
     let content = (
         <>
-            <ClaimList claimList={reqData}></ClaimList>
-            <form>
-                <hr />
-                <AccidentRadio
-                    data={rec.accidentKind}
-                    onUpdateReqData={updateReqDataHandler}
-                />
-                <hr />
-                <div>
-                    <AccidentDate
-                        data={rec.accidentDate}
-                        onUpdateReqData={updateReqDataHandler}
-                    />
-                    <DsasName
-                        data={rec.dsasName}
-                        onUpdateReqData={updateReqDataHandler}
-                    />
-                    <KCDContainer
-                        data={rec.kcd}
-                        onUpdateReqData={updateReqDataHandler}
-                    />
-                </div>
-                <hr />
-                <ClaimResnContainer
-                    data={rec.claimResn}
-                    onUpdateReqData={updateReqDataHandler}
-                />
-                <Hospital
-                    data={rec.hospitalName}
-                    onUpdateReqData={updateReqDataHandler}
-                />
-                <Button onClick={submitHandler}>신청하기</Button>
-            </form>
+            <ClaimList
+                claimList={reqData}
+                onFormDataHandler={formDataHandler}
+            ></ClaimList>
+            <Form
+                formData={formData}
+                onFetchData={fetchData}
+                onMaxNo={getMaxNo}
+                onFormDataHandler={formDataHandler}
+                formCount={formCount}
+            />
         </>
     );
 
     if (!isLoaded) {
         content = <h1 style={{ textAlign: "center" }}>Loading...</h1>;
     }
+
+    if (save == formData) {
+        console.log("save == formData");
+    } else {
+        console.log("save != formData");
+    }
+
+    console.log('formCount:', formCount);
 
     return content;
 }

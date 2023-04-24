@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react"
+import {useEffect, useState, memo} from "react"
 import styles from "./ClaimResnContainer.module.css"
 import ClaimResnBox from "./ClaimResnBox";
 import Label from "../UI/Label";
@@ -42,4 +42,4 @@ const ClaimResnContainer = (props) => {
 
 }
 
-export default ClaimResnContainer;
+export default memo(ClaimResnContainer);

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import styles from "./Hospital.module.css"; // Import the CSS module
 import Modal from "../UI/Modal";
 import Label from "../UI/Label";
@@ -120,4 +120,4 @@ const Hospital = (props) => {
     );
 };
 
-export default Hospital;
+export default memo(Hospital);

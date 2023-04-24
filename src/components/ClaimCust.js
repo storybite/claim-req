@@ -1,32 +1,33 @@
-import { useEffect, useState, memo } from "react";
+import React from "react";
 import Label from "./UI/Label";
 import Input from "./UI/Input";
+import { useState, useEffect, memo } from "react";
 
-const DsasName = (props) => {
-    const [dsasName, setDsasName] = useState("");
-    const NAME = "dsasName";
+const ClaimCust = (props) => {
+    const [custName, setCustName] = useState("");
+    const NAME = "custName";
 
     useEffect(() => {
-        setDsasName(props.data);
+        setCustName(props.data);
     }, [props.data]);
 
     const inputHandler = (evt) => {
-        setDsasName(evt.target.value);
+        setCustName(evt.target.value);
     };
 
     const blurHandler = (evt) => {
-        props.onUpdateReqData({ dsasName: evt.target.value });
+        props.onUpdateReqData({ custName: evt.target.value });
     };
 
     return (
         <>
-            <Label htmlFor={NAME}>병명</Label>
+            <Label htmlFor={NAME}>사고자 이름</Label>
             <Input
                 dict={{
                     id: NAME,
                     type: "text",
                     name: NAME,
-                    value: dsasName,
+                    value: custName,
                     onChange: inputHandler,
                     onBlur: blurHandler,
                 }}
@@ -35,4 +36,4 @@ const DsasName = (props) => {
     );
 };
 
-export default memo(DsasName);
+export default memo(ClaimCust);

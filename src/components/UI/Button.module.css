@@ -11,6 +11,10 @@
   margin: 1rem auto;
 }
 
+.inlineBlock {
+  display: inline-block;
+}
+
 .button:hover,
 .button:active {
   background: #741188;

@@ -1,5 +1,4 @@
-import classes from "./AccidentDate.module.css"
-import {useEffect, useState} from "react"
+import {useEffect, useState, memo} from "react"
 import Label from "./UI/Label"
 import Input from "./UI/Input"
 
@@ -14,6 +13,7 @@ let callCnt=0;
 const AccidentDate = (props) => {
 
     console.log(NAME + ">: callCnt " + callCnt++)
+    console.log(NAME + ">: props.data " + props.data)
 
     const [accidentDate, setAccidentDate] = useState("")
 
@@ -36,4 +36,4 @@ const AccidentDate = (props) => {
 
 }
 
-export default AccidentDate;
+export default memo(AccidentDate);

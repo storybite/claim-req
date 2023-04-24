@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import KCDBox from "./KCDBox";
 import Label from "../UI/Label";
 
@@ -7,13 +7,18 @@ const KCDContainer = (props) => {
     console.log("KCDContainer props.data" + props.data)
 
     const [kcdGroup, setKcdGroup] = useState("");
+    const [isInitialMount, setIsInitialMount] = useState(true); // 추가한 상태
 
     useEffect(() => {
         setKcdGroup(props.data);
     }, [props.data]);
 
-    useEffect(() => {
-        props.onUpdateReqData({ kcd: kcdGroup });
+    useEffect(() => {          
+        if (!isInitialMount) {
+            props.onUpdateReqData({ kcd: kcdGroup });
+        } else {
+            setIsInitialMount(false); // 최초 마운트 상태를 false로 변경
+        }
     }, [kcdGroup]);
 
     
@@ -57,4 +62,4 @@ const KCDContainer = (props) => {
     );
 };
 
-export default KCDContainer;
+export default memo(KCDContainer);
