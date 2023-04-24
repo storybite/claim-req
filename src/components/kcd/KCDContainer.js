@@ -3,40 +3,33 @@ import KCDBox from "./KCDBox";
 import Label from "../UI/Label";
 
 const KCDContainer = (props) => {
-    const [kcdGroup, setKcdGroup] = useState(props.data);
-    const [error, setError] = useState(null);
+
+    console.log("KCDContainer props.data" + props.data)
+
+    const [kcdGroup, setKcdGroup] = useState("");
+
+    useEffect(() => {
+        setKcdGroup(props.data);
+    }, [props.data]);
 
     useEffect(() => {
         props.onUpdateReqData({ kcd: kcdGroup });
     }, [kcdGroup]);
 
-    useEffect(()=>{
-        if(error) {
-            //alert(error.message)
-            throw error;
-        }
-    }, [error])
-
-
+    
     const checkValidKCD = (kcd) => {
         kcdGroup.map(item => {
-            if(item === kcd) {
+            if(kcd.length > 0 && item === kcd) {
                 throw new Error("동일한 KCD가 있습니다.")
             }
         })
         
     }
     
-    const updateKcdGroup = (entry) => {
+    const updateKcdGroupHandler = (entry) => {
         const kcd = entry['kcd'];
-        const itemIndex = entry['itemIndex'];        
-        
-        try {
-            checkValidKCD(kcd)
-        } catch (e) {
-            setError(e)
-            return;
-        }
+        const itemIndex = entry['itemIndex'];                
+        checkValidKCD(kcd)        
         setKcdGroup((prev) => {
             const rtn = [ ...prev ];
             console.log("rtn >> ", rtn)
@@ -55,8 +48,8 @@ const KCDContainer = (props) => {
                     <KCDBox
                         key={index}
                         itemIndex={index}
-                        data={props.data[index]}
-                        onUpdateKcdData={updateKcdGroup}
+                        data={kcdGroup[index]}
+                        onUpdateKcdGroup={updateKcdGroupHandler}
                     />
                 ))}
             </span>

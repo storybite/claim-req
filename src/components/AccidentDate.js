@@ -15,10 +15,7 @@ const AccidentDate = (props) => {
 
     console.log(NAME + ">: callCnt " + callCnt++)
 
-    // const [accidentDate, setAccidentDate] = useState(formatDate(new Date()))    
-    const [accidentDate, setAccidentDate] = useState(props.data)    
-
-    console.log("useState accidentDate " + accidentDate)
+    const [accidentDate, setAccidentDate] = useState("")
 
     useEffect(()=>{
         console.log("accidntDate useEffect> ", accidentDate)
@@ -29,8 +26,6 @@ const AccidentDate = (props) => {
         setAccidentDate(evt.target.value);
         props.onUpdateReqData({accidentDate: evt.target.value})
     }
-
-    console.log("accidentData 31 ", accidentDate)
 
     return (
         <>

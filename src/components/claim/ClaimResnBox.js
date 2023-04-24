@@ -17,7 +17,7 @@ const ClaimResnBox = (props) => {
         props.onClick({[engName[props.title]] : evt.target.checked})
     };
 
-    console.log("ClaimResnBox " + isChecked + "," + props.isChecked)
+    //console.log("ClaimResnBox " + isChecked + "," + props.isChecked)
 
     return (
         <>

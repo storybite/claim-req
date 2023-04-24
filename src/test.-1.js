@@ -102,3 +102,55 @@ const my_getAA2 = f1();//f1의 실행시점으로 렉시컬에 대한 구체적 
 my_getAA1() //my_getAA1이 참조하는 렉시컬에 정보는 aa=50
 my_getAA2() //my_getAA2가 참조하는 렉시컬에 정보는 aa=-50
 */
+
+let a1 = {name:"lsw", age:50}
+let a2 = {addr:"seoul", sex:1}
+
+console.log('a1:', a1);
+console.log('a2:', a2);
+
+let a3 = {...a1, ...a2}
+console.log('a3:', a3);
+
+let a4 = {...a1, name:"emh"}
+console.log('a4:', a4);
+
+
+console.log('"abc".includes("b"):', "abc".includes("e"));
+
+
+let a5 = [{name:"lsw", age:"50"},{name:"lsw2", age:"40"}]
+
+let a6 = [];
+
+a5.map(item=>a6.push(Object.values(item)))
+
+console.log('a6:', a6);
+
+
+
+const columnOrder = ['id', 'accidentDate', 'custName', 'dsasName', 'result']
+
+console.log('columnOrder:', columnOrder.indexOf('accidentDate'));
+
+
+
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+  
+    return `${year}-${month}-${day}`;
+  }
+  
+const today = new Date();
+const formattedDate = formatDate(today);
+console.log(formattedDate);
+
+var v1 = {name:"lsw", age:"50"};
+  
+for (const [key, value] of Object.entries(v1)) {
+    console.log(`${key}: ${value}`);
+}
+  

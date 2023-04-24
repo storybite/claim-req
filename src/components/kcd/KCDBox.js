@@ -16,6 +16,10 @@ const debounce = (func, wait) => {
 
 const kcds = [
     {
+        code: "",
+        name: "clear",
+    },
+    {
         code: "A01",
         name: "장티푸스 및 파라티푸스",
     },
@@ -130,12 +134,19 @@ const KCDBox = (props) => {
 
     const [kcd, setKcd] = useState("");
     const [isPopUped, setIsPopUped] = useState(false);
-
-    console.log("kcd key " + props.itemIndex);
+    const [error, setError] = useState(null);
 
     useEffect(() => {        
-        setKcd(props.data);
+        setKcd(props.data || ""); //경고 표시 제어 Warning: A component is changing a controlled input to be uncontrolled.
     }, [props.data]);
+
+    useEffect(()=>{
+        if(error) {
+            alert(error.message)
+            //throw error;
+        }
+    }, [error])
+
 
     const inputHandler = (evt) => {
         setIsPopUped(!isPopUped)        
@@ -143,25 +154,21 @@ const KCDBox = (props) => {
 
     const rowClickHandler = (kcdCode, evt) => {
         console.log("evt " + evt.target)
-        props.onUpdateKcdData({
-            kcd: kcdCode,
-            itemIndex: props.itemIndex,
-        });
-        setKcd(kcdCode);
-        setIsPopUped(!isPopUped)
+        try {
+            props.onUpdateKcdGroup({
+                kcd: kcdCode,
+                itemIndex: props.itemIndex,
+            });
+            setKcd(kcdCode);
+            setIsPopUped(!isPopUped)
+        } catch (e) {
+            setError(e)
+        }
     }
 
     const closeHandler = (evt) => {
         setIsPopUped(false)
     }
-
-    const blurHandler = (evt) => {        
-        console.log("BLUR HANDLER " + evt.target.innerText) 
-        props.onUpdateKcdData({
-            kcd: evt.target.innerText,
-            itemIndex: props.itemIndex,
-        });
-    };
 
     return (
         <>

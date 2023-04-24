@@ -6,16 +6,17 @@ import Label from "../UI/Label";
 
 const ClaimResnContainer = (props) => {
 
-    const [claimResnGroup, setClaimResGroup] = useState(props.data);
-
-    useEffect(()=>{
-        props.onUpdateReqData({claimResn: claimResnGroup}) 
-    }, [claimResnGroup])
+    const [claimResnGroup, setClaimResGroup] = useState("");
 
     useEffect(()=>{
         //props.onUpdateReqData({claimResn: props.data}) 
         setClaimResGroup(props.data)
     }, [props.data])
+
+
+    useEffect(()=>{
+        props.onUpdateReqData({claimResn: claimResnGroup}) 
+    }, [claimResnGroup])
 
     const updateClaimResnGroup = (entry) => {
         setClaimResGroup((prev)=>{
@@ -25,7 +26,7 @@ const ClaimResnContainer = (props) => {
         })
     }
 
-    console.log("ClaimResnContainer props.data " + props.data)
+    //console.log("ClaimResnContainer props.data " + props.data)
 
     return (
         <>
