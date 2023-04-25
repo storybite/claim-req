@@ -19,6 +19,7 @@ function App() {
         fetchData();
     }, []);
 
+    
     const fetchData = async () => {
         const data = await getData();
         if (data == null) {
@@ -26,7 +27,20 @@ function App() {
             setReqData(data);
         }
         setIsLoaded(true);
+    
+        setFormCount(prev=>prev+1)    
     };
+
+    const filterReqData = async (name, accidentDate, result) => {
+        let filteredList = await getData();
+        if (filteredList == null) return
+        
+        filteredList = filteredList.filter(item=> name.length == 0 || item.custName == name)
+        filteredList = filteredList.filter(item=> accidentDate.length == 0 || item.accidentDate == accidentDate)
+        filteredList = filteredList.filter(item=> result.length == 0 || item.result == result)
+        
+        setReqData(filteredList);
+    }
 
     const getMaxNo = () => {
         console.log("maxInDict:", comm.maxInDictList(reqData, "no"));
@@ -53,6 +67,7 @@ function App() {
             <ClaimList
                 claimList={reqData}
                 onFormDataHandler={formDataHandler}
+                onFilterReqData={filterReqData}
             ></ClaimList>
             <Form
                 formData={formData}

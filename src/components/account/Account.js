@@ -6,6 +6,7 @@ import styles from "./Account.module.css";
 import { useState, useEffect,memo } from "react";
 //import { deleteData, postData, putData } from "../../module/fetch";
 import { getData } from "../../module/fetch";
+import AddAccount from "./AddAccount";
 
 const Account = (props) => {
     
@@ -34,6 +35,16 @@ const Account = (props) => {
         }
         setIsLoaded(true);
     };
+
+    const addData = (data) => {
+        //accountList.push(data) //렌더링안됨.
+        
+        // setAccountList(prev=>{
+        //     return [...prev, data]
+        // })
+
+        setAccountList((prev) => prev.concat(data));
+    }
 
 
     const inputHandler = (evt) => {
@@ -96,6 +107,7 @@ const Account = (props) => {
                                 </tbody>
                             </table>
                         </div>
+                        <AddAccount onAddData={addData} onClose={closeHandler}/>
                     </Modal>
                 </>
             )}

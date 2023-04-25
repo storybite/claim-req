@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from './Button.module.css';
+import styles from './SearchButton.module.css';
 
-const Button = (props) => {
+const SearchButton = (props) => {
   return (
     <button
       type={props.type || 'button'}
@@ -16,4 +16,4 @@ const Button = (props) => {
   );
 };
 
-export default Button;
+export default SearchButton;
