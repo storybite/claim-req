@@ -8,6 +8,7 @@ import { useState, useEffect,memo } from "react";
 import { getData } from "../../module/fetch";
 import AddAccount from "./AddAccount";
 
+//git test
 const Account = (props) => {
     
     const [accountList, setAccountList] = useState([]);
