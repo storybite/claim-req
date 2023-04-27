@@ -1,4 +1,4 @@
-import styles from "./KCDBox.module.css";
+import styles from "./KCD.module.css";
 import { useEffect, useState } from "react";
 import Modal from "../UI/Modal";
 import Input from "../UI/Input";
@@ -128,7 +128,7 @@ const kcds = [
 
 const korName = { code: "표준질병분류코드", name: "질병명" };
 
-const KCDBox = (props) => {
+function KCD(props) {
 
     const data = kcds;
 
@@ -136,39 +136,39 @@ const KCDBox = (props) => {
     const [isPopUped, setIsPopUped] = useState(false);
     const [error, setError] = useState(null);
 
-    useEffect(() => {        
+    useEffect(() => {
         setKcd(props.data || ""); //경고 표시 제어 Warning: A component is changing a controlled input to be uncontrolled.
     }, [props.data]);
 
-    useEffect(()=>{
-        if(error) {
-            alert(error.message)
+    useEffect(() => {
+        if (error) {
+            alert(error.message);
             //throw error;
         }
-    }, [error])
+    }, [error]);
 
 
     const inputHandler = (evt) => {
-        setIsPopUped(!isPopUped)        
+        setIsPopUped(!isPopUped);
     };
 
     const rowClickHandler = (kcdCode, evt) => {
-        console.log("evt " + evt.target)
+        console.log("evt " + evt.target);
         try {
             props.onUpdateKcdGroup({
                 kcd: kcdCode,
                 itemIndex: props.itemIndex,
             });
             setKcd(kcdCode);
-            setIsPopUped(!isPopUped)
+            setIsPopUped(!isPopUped);
         } catch (e) {
-            setError(e)
+            setError(e);
         }
-    }
+    };
 
     const closeHandler = (evt) => {
-        setIsPopUped(false)
-    }
+        setIsPopUped(false);
+    };
 
     return (
         <>
@@ -182,8 +182,7 @@ const KCDBox = (props) => {
                     onFocus: inputHandler,
                     readOnly: true
                     //onBlur: blurHandler,
-                }}
-            />
+                }} />
             {isPopUped && (
                 <>
                     <Modal>
@@ -199,7 +198,7 @@ const KCDBox = (props) => {
                                 {data.map((row, index) => (
                                     //<tr key={index} onClick={rowClickHandler}>
                                     <tr key={index}
-                                        onClick={(evt)=>rowClickHandler(Object.values(row)[0], evt)}
+                                        onClick={(evt) => rowClickHandler(Object.values(row)[0], evt)}
                                     >
                                         {Object.values(row).map((value, i) => (
                                             <td key={i}>{value}</td>
@@ -214,6 +213,6 @@ const KCDBox = (props) => {
             )}
         </>
     );
-};
+}
 
-export default KCDBox;
+export default KCD;

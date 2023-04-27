@@ -1,5 +1,5 @@
-import { useEffect, useState, memo } from "react";
-import KCDBox from "./KCDBox";
+import { useEffect, useState, useRef, memo } from "react";
+import KCD from "./KCD";
 import Label from "../UI/Label";
 
 const KCDContainer = (props) => {
@@ -13,34 +13,27 @@ const KCDContainer = (props) => {
         setKcdGroup(props.data);
     }, [props.data]);
 
-    useEffect(() => {          
-        if (!isInitialMount) {
-            props.onUpdateReqData({ kcd: kcdGroup });
-        } else {
-            setIsInitialMount(false); // 최초 마운트 상태를 false로 변경
-        }
-    }, [kcdGroup]);
-
-    
     const checkValidKCD = (kcd) => {
         kcdGroup.map(item => {
             if(kcd.length > 0 && item === kcd) {
                 throw new Error("동일한 KCD가 있습니다.")
             }
         })
-        
     }
     
     const updateKcdGroupHandler = (entry) => {
         const kcd = entry['kcd'];
         const itemIndex = entry['itemIndex'];                
-        checkValidKCD(kcd)        
+        checkValidKCD(kcd) 
+        let updtKcd;       
         setKcdGroup((prev) => {
             const rtn = [ ...prev ];
             console.log("rtn >> ", rtn)
             rtn[itemIndex] = kcd;
+            updtKcd = [...rtn]
             return rtn;
-        })
+        })      
+        props.onUpdateReqData({ kcd: updtKcd });
     };
 
     console.log(props.data);
@@ -50,7 +43,7 @@ const KCDContainer = (props) => {
             <Label>질병코드</Label>
             <span>
                 {Array.from({ length: 4 }, (_, index) => (
-                    <KCDBox
+                    <KCD
                         key={index}
                         itemIndex={index}
                         data={kcdGroup[index]}
