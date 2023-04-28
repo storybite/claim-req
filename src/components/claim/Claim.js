@@ -11,6 +11,7 @@ import styles from "../UI/Button.module.css";
 import { deleteData, postData, putData } from "../../module/fetch";
 import Account from "../account/Account";
 import Insured from "../cust/Insured";
+import Panel from "../UI/Panel";
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -82,10 +83,8 @@ const Claim = (props) => {
             alert("저장되지 않은 건입니다.");
             return;
         }
-        await deleteData(claimData.id);
-        props.onFormDataHandler(null);
-        alert("삭제 성공!!");
-        props.onFetchData();
+        props.deleteData({...claimData})       
+        alert("성공적으로 삭제되었습니다.");
     };
 
     const clearHandler = (evt) => {
@@ -97,54 +96,57 @@ const Claim = (props) => {
     //console.log("befo return formData.kcd: " + formData.kcd);
     let content = ( 
         <form>
-            <hr />
-            <Insured
-                data={claimData.custName}
-                onUpdateReqData={updateReqDataHandler}
-            />
-            <hr />
-            <AccidentRadio
-                data={claimData.accidentKind}
-                onUpdateReqData={updateReqDataHandler}
-            />
-            <hr />
-            <div>
-                <AccidentDate
-                    data={claimData.accidentDate}
-                    onUpdateReqData={updateReqDataHandler}
-                />
-                <DsasName
-                    data={claimData.dsasName}
-                    onUpdateReqData={updateReqDataHandler}
-                />
-                <KCDCt
-                    data={claimData.kcd}
-                    stopCascading={claimData.stopCascading}
-                    onUpdateReqData={updateKcdHandler}
-                />
-            </div>
-            <hr />
-            <AccidentDetails
-                data={claimData.accidentDetails}
-                onUpdateReqData={updateReqDataHandler}
-            />
-            <hr />
-            <ClaimResnCt
-                data={claimData.claimResn}
-                onUpdateReqData={updateReqDataHandler}
-            />
-            <Hospital
-                data={claimData.hospitalName}
-                onUpdateReqData={updateReqDataHandler}
-            />
-            <hr />
-            <div>
-                <Account 
-                    data={claimData.accountId}
-                    onUpdateReqData={updateReqDataHandler}
-                />
-            </div>
-            <hr />
+            <Panel type="box1">
+                <Panel type="line"  style={{backgroundColor:"#eee"}}>
+                    <Insured
+                        data={claimData.custName}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                </Panel>
+                <Panel type="line">
+                    <AccidentRadio
+                        data={claimData.accidentKind}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                </Panel>
+                <Panel type="line"  style={{backgroundColor:"#eee"}}>
+                    <AccidentDate
+                        data={claimData.accidentDate}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                    <DsasName
+                        data={claimData.dsasName}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                    <KCDCt
+                        data={claimData.kcd}
+                        stopCascading={claimData.stopCascading}
+                        onUpdateReqData={updateKcdHandler}
+                    />
+                </Panel>
+                <Panel type="line">
+                    <AccidentDetails
+                        data={claimData.accidentDetails}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                </Panel>
+                <Panel type="line" style={{backgroundColor:"#eee"}}>
+                    <ClaimResnCt
+                        data={claimData.claimResn}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                    <Hospital
+                        data={claimData.hospitalName}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                </Panel>
+                <Panel type="line">
+                    <Account 
+                        data={claimData.accountId}
+                        onUpdateReqData={updateReqDataHandler}
+                    />
+                </Panel>
+            </Panel>
             <div style={{ border: "0px solid black", textAlign: "center" }}>
                 <Button className={styles.inlineBlock} onClick={submitHandler}>
                     신청하기
@@ -167,6 +169,7 @@ const Claim = (props) => {
                 </Button>
             </div>
         </form>
+        
     )
 
     //return formData.no > 0 && content;

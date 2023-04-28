@@ -1,5 +1,5 @@
 import "./App.css";
-import ClaimList from "./components/list/ClaimList";
+import ClaimList from "./components/claimList/ClaimList";
 import comm from "./module/common";
 import { useEffect, useState } from "react";
 import { getData, postData, putData } from "./module/fetch";
@@ -58,6 +58,16 @@ function App() {
         fetchData();
         setClaimData(paramClaimData)
     };    
+
+    const deleteData = async (paramClaimData) => {
+        if (paramClaimData.id == null) {
+            alert("저장되지 않은 건입니다.");
+            return;
+        }
+        await deleteData(paramClaimData.id);
+        formDataHandler(null);
+        fetchData();
+    };
     
     const getMaxNo = () => {
         console.log("maxInDict:", comm.maxInDictList(reqData, "no"));
@@ -90,6 +100,7 @@ function App() {
                 onMaxNo={getMaxNo}
                 onFormDataHandler={formDataHandler}
                 onSaveData={saveData}
+                onDeleteData={deleteData}
             />
         </>
     );

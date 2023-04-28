@@ -2,6 +2,7 @@ import React from "react"
 import Label from "../UI/Label";
 
 import { useState, useEffect } from "react";
+import Panel from "../UI/Panel";
 
 const AccidentDetails = (props) => {
 
@@ -22,15 +23,16 @@ const AccidentDetails = (props) => {
 
     return (
         <>
-
-            <Label htmlFor={NAME}>사고경위</Label>
-            <div style={{margin:"0.5rem"}}>
-                <textarea cols="118" rows="3"
-                    onChange={inputHandler}
-                    onBlur={blurHandler}
-                    value={accidentDetails}
-                />
+            <Panel>
+                <Label htmlFor={NAME} style={{width:"5.3rem"}}>사고난 경위</Label>
+                <div style={{margin:"0.2rem"}}>
+                    <textarea cols="103" rows="3"
+                        onChange={inputHandler}
+                        onBlur={blurHandler}
+                        value={accidentDetails}
+                    />
             </div>
+            </Panel>
             
             
         </>

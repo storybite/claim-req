@@ -11,6 +11,8 @@
   
 }
 
+
+
 .between {
   display: flex;  
   justify-content: space-between;
@@ -22,21 +24,4 @@
   display: flex;  
   justify-content: flex-end;  
   /* width: 10%; */
-}
-
-.line {
-  display: flex;  
-  justify-content: flex-start;
-  align-items: center;
-  padding : 5px 0;
-  border: none;
-  border-bottom: 2px solid #bbb;
-  
-}
-
-.box1 {    
-  margin: 1rem;
-  border-radius: 10px;
-  border: 2px solid #bbb;
-  
 }

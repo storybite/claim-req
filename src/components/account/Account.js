@@ -70,7 +70,7 @@ const Account = (props) => {
 
     return (
         <>
-            <Label htmlFor={"account"}>계좌정보</Label>
+            <Label htmlFor={"account"} style={{margin:"0 1rem 0 0.3rem"}}>계좌 정보</Label>
             <Input
                 dict={{
                     id: "account",
