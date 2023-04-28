@@ -3,9 +3,6 @@ import styles from "./AccountPopUp.module.css";
 
 const AccountPopUp = (props) => {
 
-
-
-
     return (
         <div className={styles.tableWrapper}>
             <table className={styles.table}>

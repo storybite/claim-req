@@ -2,6 +2,8 @@ import styles from "./KCD.module.css";
 import { useEffect, useState } from "react";
 import Modal from "../UI/Modal";
 import Input from "../UI/Input";
+import Button from "../UI/Button";
+import Panel from "../UI/Panel";
 
 const debounce = (func, wait) => {
     let timeout;
@@ -15,10 +17,6 @@ const debounce = (func, wait) => {
 };
 
 const kcds = [
-    {
-        code: "",
-        name: "clear",
-    },
     {
         code: "A01",
         name: "장티푸스 및 파라티푸스",
@@ -170,6 +168,11 @@ function KCD(props) {
         setIsPopUped(false);
     };
 
+    const clearHandler = (evt) => {
+        setIsPopUped(false);
+        setKcd("");
+    };
+
     return (
         <>
             <Input
@@ -186,28 +189,33 @@ function KCD(props) {
             {isPopUped && (
                 <>
                     <Modal>
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    {Object.keys(data[0]).map((key, index) => (
-                                        <th key={index}>{korName[key]}</th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((row, index) => (
-                                    //<tr key={index} onClick={rowClickHandler}>
-                                    <tr key={index}
-                                        onClick={(evt) => rowClickHandler(Object.values(row)[0], evt)}
-                                    >
-                                        {Object.values(row).map((value, i) => (
-                                            <td key={i}>{value}</td>
+                        <div className={styles.tableWrapper}>
+                            <table className={styles.table}>
+                                <thead>
+                                    <tr>
+                                        {Object.keys(data[0]).map((key, index) => (
+                                            <th key={index}>{korName[key]}</th>
                                         ))}
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <button className={styles.button} onClick={closeHandler}>닫기</button>
+                                </thead>
+                                <tbody>
+                                    {data.map((row, index) => (
+                                        //<tr key={index} onClick={rowClickHandler}>
+                                        <tr key={index}
+                                            onClick={(evt) => rowClickHandler(Object.values(row)[0], evt)}
+                                        >
+                                            {Object.values(row).map((value, i) => (
+                                                <td key={i}>{value}</td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <Panel>
+                            <Button type="button" style={{margin:"2rem 0.5rem", backgroundColor:"#aaa"}} onClick={closeHandler}>닫기</Button>
+                            <Button type="button" style={{margin:"2rem 0.5rem", backgroundColor:"#aaa"}} onClick={clearHandler}>Clear</Button>
+                        </Panel>
                     </Modal>
                 </>
             )}

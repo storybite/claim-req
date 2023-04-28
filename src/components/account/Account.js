@@ -84,7 +84,7 @@ const Account = (props) => {
             />
             {isPopUped && (
                 <>
-                    <Modal>
+                    <Modal  style={{height:"30%"}}>
                         <div className={styles.tableWrapper}>
                             <table className={styles.table}>            
                                 <thead>

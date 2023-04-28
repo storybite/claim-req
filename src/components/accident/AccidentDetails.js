@@ -3,6 +3,7 @@ import Label from "../UI/Label";
 
 import { useState, useEffect } from "react";
 import Panel from "../UI/Panel";
+import Textarea from "../UI/Textarea";
 
 const AccidentDetails = (props) => {
 
@@ -25,16 +26,17 @@ const AccidentDetails = (props) => {
         <>
             <Panel>
                 <Label htmlFor={NAME} style={{width:"5.3rem"}}>사고난 경위</Label>
-                <div style={{margin:"0.2rem"}}>
-                    <textarea cols="103" rows="3"
-                        onChange={inputHandler}
-                        onBlur={blurHandler}
-                        value={accidentDetails}
-                    />
-            </div>
+                <Textarea
+                    style={{margin:"0.2rem"}}
+                    dict={{
+                        cols:"103",
+                        rows: "3",
+                        onChange: inputHandler,
+                        onBlur: blurHandler,
+                        value: accidentDetails
+                    }}
+                />
             </Panel>
-            
-            
         </>
     )
 

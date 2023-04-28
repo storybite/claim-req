@@ -21,9 +21,9 @@ const AccidentRadio = (props) => {
             <Label>사고의 종류</Label>
             <span className={styles.radioGroup}>
                 <Label htmlFor="disease">질병</Label>
-                <Input dict={{id:"disease", type:"radio", name:"disease", value:"disease", checked:isDisease, onChange:radioHandler}}/>
+                <Input style={{width:"1.7rem"}} dict={{id:"disease", type:"radio", name:"disease", value:"disease", checked:isDisease, onChange:radioHandler}}/>
                 <Label htmlFor="disaster">재해</Label>
-                <Input dict={{id:"disaster", type:"radio", name:"disaster", value:"disaster", checked:!isDisease, onChange:radioHandler}}/>
+                <Input style={{width:"1.7rem"}} dict={{id:"disaster", type:"radio", name:"disaster", value:"disaster", checked:!isDisease, onChange:radioHandler}}/>
             </span>
         </>
     )

@@ -3,7 +3,10 @@ import styles from "./Hospital.module.css"; // Import the CSS module
 import Modal from "../UI/Modal";
 import Label from "../UI/Label";
 import Input from "../UI/Input";
+import Button from "../UI/Button";
+import Panel from "../UI/Panel";
 import { useState } from "react";
+
 
 const hospitals = [
     {
@@ -91,7 +94,7 @@ const Hospital = (props) => {
             />
             {isPopUped && (
                 <>
-                    <Modal>
+                    <Modal style={{height:"40%"}}>
                         <table className={styles.table}>
                             <thead>
                                 <tr>
@@ -112,7 +115,9 @@ const Hospital = (props) => {
                                 ))}
                             </tbody>
                         </table>
-                        <button className={styles.button} onClick={closeHandler}>닫기</button>
+                        <Panel>
+                            <Button type="button" style={{margin:"2rem 0.5rem"}} onClick={closeHandler}>닫기</Button>
+                        </Panel>                        
                     </Modal>
                 </>
             )}

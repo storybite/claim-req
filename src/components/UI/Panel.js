@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./Panel.module.css"
+import styles from "./Panel.module.css" 
 
 const Panel = (props) => {
     
@@ -9,6 +9,8 @@ const Panel = (props) => {
         className = styles.line
     } else if(props.type=="box1") {
         className = styles.box1
+    } else if(props.type=="box2") {
+        className = styles.box2
     }
 
     return (

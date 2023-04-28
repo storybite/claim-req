@@ -10,9 +10,12 @@
   
   .modal {
     position: fixed;
-    top: 20vh;
+    top: 10vh;
     left: 5%;
     width: 90%;
+    /* height: 70%;     */
+    height: 50%;
+    overflow-y: auto; /* This will add da scroll when needed */
     background-color: white;
     padding: 1rem;
     border-radius: 14px;

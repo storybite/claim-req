@@ -1,3 +1,4 @@
+import styles from "./Claim.module.css"
 import AccidentRadio from "../accident/AccidentRadio";
 import DsasName from "../accident/DsasName";
 import KCDCt from "../kcd/KCDCt";
@@ -7,11 +8,12 @@ import AccidentDetails from "../accident/AccidentDetails";
 import Hospital from "../hospital/Hospital";
 import { useEffect, useState, useReducer, useCallback } from "react";
 import Button from "../UI/Button";
-import styles from "../UI/Button.module.css";
+import buttonStyles from "../UI/Button.module.css";
 import { deleteData, postData, putData } from "../../module/fetch";
 import Account from "../account/Account";
 import Insured from "../cust/Insured";
 import Panel from "../UI/Panel";
+import Label from "../UI/Label";
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -96,20 +98,21 @@ const Claim = (props) => {
     //console.log("befo return formData.kcd: " + formData.kcd);
     let content = ( 
         <form>
+            <div className={styles.no}>{`보험금 신청서 (신청번호: ${claimData.no}번)`}</div>
             <Panel type="box1">
-                <Panel type="line"  style={{backgroundColor:"#eee"}}>
+                <Panel type="line" style={{backgroundColor:"transparent"}}>
                     <Insured
                         data={claimData.custName}
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
-                <Panel type="line">
+                <Panel type="line" style={{backgroundColor:"white"}}>
                     <AccidentRadio
                         data={claimData.accidentKind}
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
-                <Panel type="line"  style={{backgroundColor:"#eee"}}>
+                <Panel type="line" >
                     <AccidentDate
                         data={claimData.accidentDate}
                         onUpdateReqData={updateReqDataHandler}
@@ -124,13 +127,13 @@ const Claim = (props) => {
                         onUpdateReqData={updateKcdHandler}
                     />
                 </Panel>
-                <Panel type="line">
+                <Panel type="line" style={{backgroundColor:"white"}}>
                     <AccidentDetails
                         data={claimData.accidentDetails}
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
-                <Panel type="line" style={{backgroundColor:"#eee"}}>
+                <Panel type="line">
                     <ClaimResnCt
                         data={claimData.claimResn}
                         onUpdateReqData={updateReqDataHandler}
@@ -140,7 +143,7 @@ const Claim = (props) => {
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
-                <Panel type="line">
+                <Panel type="line" style={{borderBottom:"none", backgroundColor:"transparent"}}>
                     <Account 
                         data={claimData.accountId}
                         onUpdateReqData={updateReqDataHandler}
@@ -148,12 +151,12 @@ const Claim = (props) => {
                 </Panel>
             </Panel>
             <div style={{ border: "0px solid black", textAlign: "center" }}>
-                <Button className={styles.inlineBlock} onClick={submitHandler}>
+                <Button className={buttonStyles.inlineBlock} onClick={submitHandler}>
                     신청하기
                 </Button>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <Button
-                    className={styles.inlineBlock}
+                    className={buttonStyles.inlineBlock}
                     type="button"
                     onClick={clearHandler}
                 >
@@ -161,7 +164,7 @@ const Claim = (props) => {
                 </Button>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <Button
-                    className={styles.inlineBlock}
+                    className={buttonStyles.inlineBlock}
                     type="button"
                     onClick={deleteHandler}
                 >

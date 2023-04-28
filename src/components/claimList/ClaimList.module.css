@@ -5,29 +5,37 @@
     height: 10rem;
     overflow-y: auto; /* This will add da scroll when needed */
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    /* padding : 0 1rem; */
+
+    /* border: 1px solid #000; */
  }
   
  .table {    
     border-collapse: collapse;
-    width: 100%;    
+    width: 98%;    
     font-family: Arial, sans-serif;
   }
 
   .table thead {
     position: sticky;
     top: 0px;
+    
   }
   
   
   .table th, .table td {
     border-bottom: 1px solid lightgrey;
     padding: 8px;
-    text-align: center;
+    text-align: center;    
   }
   
   .table th {
-    background-color: #ccc;
+    /* background-color: #ccc; */
     font-weight: bold;
+    background-color: #4f005f ;
+    color: white;
   }
   
   .table tr:nth-child(even) {
@@ -35,7 +43,17 @@
   }
   
   .table tr:hover {
-    background-color: #ddd;
+    background-color: rgba(116, 17, 136, 0.1) !important;    
+  }
+
+  .table th:nth-child(1) {
+    border-radius: 10px 0px 0px 0px;
+  }
+  .table th:last-child {
+    border-radius: 0px 10px 0px 0px;
+  }
+  .table tr:nth-child(even) {
+    background-color: #EEF1FF;
   }
 
   .button {

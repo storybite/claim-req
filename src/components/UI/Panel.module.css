@@ -36,7 +36,15 @@
 
 .box1 {    
   margin: 1rem;
-  border-radius: 10px;
-  border: 2px solid #bbb;
+  border-radius: 20px;
+  border: 1px solid  rgba(66, 139, 202);
+  background-color: rgba(66, 139, 202, 0.1);  
+}
+
+
+.box2 {    
+  margin: 1rem;
+  /* border-radius: 10px; */
+  border: 1px solid #bbb;
   
 }
