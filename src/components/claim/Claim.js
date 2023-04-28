@@ -3,6 +3,7 @@ import DsasName from "../accident/DsasName";
 import KCDCt from "../kcd/KCDCt";
 import AccidentDate from "../accident/AccidentDate";
 import ClaimResnCt from "../claimResn/ClaimResnCt";
+import AccidentDetails from "../accident/AccidentDetails";
 import Hospital from "../hospital/Hospital";
 import { useEffect, useState, useReducer, useCallback } from "react";
 import Button from "../UI/Button";
@@ -40,22 +41,22 @@ const Claim = (props) => {
         // console.log("reducer prev.kcd " + prev.kcd + ", action.propApplied " + action.propApplied);
         let stopCascading = action.stopCascading == null ? false : action.stopCascading ;
         if (action.propApplied) {
-            return props.formData == null
+            return props.claimData == null
                 ? { ...initData, no: props.onMaxNo() + 1, stopCascading: stopCascading}
-                : { ...props.formData, stopCascading: stopCascading} ;
+                : { ...props.claimData, stopCascading: stopCascading} ;
         } else {
             return { ...prev, ...action.entry};
         }
     };
 
-    const [formData, dispatch] = useReducer(reducer, initData);
+    const [claimData, dispatch] = useReducer(reducer, initData);
 
     useEffect(() => {
         console.log("useEffect befo");
-        dispatch({ propApplied: true, formData: props.formData });
+        dispatch({ propApplied: true, formData: props.claimData });
         console.log("useEffect aftr");
-    //}, [props.formData, props.formCount]);
-    }, [props.formData]);
+    //}, [props.claimData, props.formCount]);
+    }, [props.claimData]);
 
     const updateReqDataHandler = useCallback((dict) => {
         console.log("updateReqaDataHandler dict==> befo ", dict);
@@ -72,22 +73,16 @@ const Claim = (props) => {
 
     const submitHandler = async (evt) => {
         evt.preventDefault();
-        if (formData.id === null) {
-            formData.id = await postData(formData);
-            updateReqDataHandler({ id: formData.id });
-        }
-        await putData(formData, formData.id);
-
-        alert("db 저장 성공!!");
-        props.onFetchData();
+        props.onSaveData({...claimData})       
+        alert("성공적으로 저장되었습니다.") 
     };
 
     const deleteHandler = async (evt) => {
-        if (formData.id == null) {
+        if (claimData.id == null) {
             alert("저장되지 않은 건입니다.");
             return;
         }
-        await deleteData(formData.id);
+        await deleteData(claimData.id);
         props.onFormDataHandler(null);
         alert("삭제 성공!!");
         props.onFetchData();
@@ -97,50 +92,55 @@ const Claim = (props) => {
         props.onFormDataHandler(null);
     };
 
-    console.log("befo return formData: " + formData);
+    console.log("befo return formData: " + claimData);
 
     //console.log("befo return formData.kcd: " + formData.kcd);
     let content = ( 
         <form>
             <hr />
             <Insured
-                data={formData.custName}
+                data={claimData.custName}
                 onUpdateReqData={updateReqDataHandler}
             />
             <hr />
             <AccidentRadio
-                data={formData.accidentKind}
+                data={claimData.accidentKind}
                 onUpdateReqData={updateReqDataHandler}
             />
             <hr />
             <div>
                 <AccidentDate
-                    data={formData.accidentDate}
+                    data={claimData.accidentDate}
                     onUpdateReqData={updateReqDataHandler}
                 />
                 <DsasName
-                    data={formData.dsasName}
+                    data={claimData.dsasName}
                     onUpdateReqData={updateReqDataHandler}
                 />
                 <KCDCt
-                    data={formData.kcd}
-                    stopCascading={formData.stopCascading}
+                    data={claimData.kcd}
+                    stopCascading={claimData.stopCascading}
                     onUpdateReqData={updateKcdHandler}
                 />
             </div>
             <hr />
+            <AccidentDetails
+                data={claimData.accidentDetails}
+                onUpdateReqData={updateReqDataHandler}
+            />
+            <hr />
             <ClaimResnCt
-                data={formData.claimResn}
+                data={claimData.claimResn}
                 onUpdateReqData={updateReqDataHandler}
             />
             <Hospital
-                data={formData.hospitalName}
+                data={claimData.hospitalName}
                 onUpdateReqData={updateReqDataHandler}
             />
             <hr />
             <div>
                 <Account 
-                    data={formData.accountId}
+                    data={claimData.accountId}
                     onUpdateReqData={updateReqDataHandler}
                 />
             </div>

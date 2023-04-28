@@ -1,6 +1,6 @@
 import React from "react"
 import Label from "../UI/Label";
-import Input from "../UI/Input";
+
 import { useState, useEffect } from "react";
 
 const AccidentDetails = (props) => {

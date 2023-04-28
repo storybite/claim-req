@@ -10,9 +10,8 @@ let save;
 //git test1
 function App() {
     const [reqData, setReqData] = useState([]);
-    const [formData, setFormData] = useState(null);
+    const [claimData, setClaimData] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [formCount, setFormCount] = useState(0);
     const [isFiltered, setIsFiltered] = useState(false);
 
     useEffect(() => {
@@ -21,9 +20,9 @@ function App() {
     }, []);
 
     useEffect(() => {
-        if(isFiltered && formData) {
+        if(isFiltered && claimData) {
             setIsFiltered(false);
-            formDataHandler(formData.id)
+            formDataHandler(claimData.id)
         }
     }, [isFiltered]);
 
@@ -35,9 +34,6 @@ function App() {
             setReqData(data);
         }
         setIsLoaded(true);
-    
-        setFormCount(prev=>prev+1)    
-      
     };
 
     const filterReqData = async (name, accidentDate, result) => {
@@ -53,7 +49,16 @@ function App() {
         setReqData(filteredList);
         setIsFiltered(true);
     }
-
+    
+    const saveData = async (paramClaimData) => {
+        if (paramClaimData.id === null) {
+            paramClaimData.id = await postData(paramClaimData);
+        }
+        await putData(paramClaimData, paramClaimData.id);
+        fetchData();
+        setClaimData(paramClaimData)
+    };    
+    
     const getMaxNo = () => {
         console.log("maxInDict:", comm.maxInDictList(reqData, "no"));
         return comm.maxInDictList(reqData, "no");
@@ -61,17 +66,15 @@ function App() {
 
     const formDataHandler = (id) => {
 
-        setFormCount(prev=>prev+1)
-
         if (id == null) {
-            setFormData(null);
+            setClaimData(null);
             return
         }
 
-        save = formData;
+        save = claimData;
         const vData = reqData.filter((item) => item.id == id);
-        setFormData(vData[0]);
-        console.log("formData >:", formData);
+        setClaimData(vData[0]);
+        console.log("claimData >:", claimData);
     };
 
     let content = (
@@ -82,11 +85,11 @@ function App() {
                 onFilterReqData={filterReqData}
             ></ClaimList>
             <Claim
-                formData={formData}
+                claimData={claimData}
                 onFetchData={fetchData}
                 onMaxNo={getMaxNo}
                 onFormDataHandler={formDataHandler}
-                //formCount={formCount}
+                onSaveData={saveData}
             />
         </>
     );
@@ -94,14 +97,6 @@ function App() {
     if (!isLoaded) {
         content = <h1 style={{ textAlign: "center" }}>Loading...</h1>;
     }
-
-    if (save == formData) {
-        console.log("save == formData");
-    } else {
-        console.log("save != formData");
-    }
-
-    console.log('formCount:', formCount);
 
     return content;
 }
