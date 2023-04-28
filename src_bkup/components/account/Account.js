@@ -10,10 +10,7 @@ import AddAccount from "./AddAccount";
 
 //git test
 const Account = (props) => {
-   
-//"국민은행" -NTsidfudzbNSBevyPYQ"
-//"제일은행" -NTsidg6SXOpnybgeZtd"
-
+    
     const [accountList, setAccountList] = useState([]);
     const [accountData, setAccountData] = useState(null);
     const [isPopUped, setIsPopUped] = useState(false);
@@ -24,13 +21,12 @@ const Account = (props) => {
     }, [])
 
     useEffect(()=>{
-        if(props.data.length > 0 && accountList.length > 0) {
+        if(props.data !="" &&  props.data != null) {
             setAccountData(accountList.filter(item => item.id == props.data)[0]);
         } else {
             setAccountData(null)
         }
-    }, [props.data, accountList])
-    //}, [props.data]) 
+    }, [props.data])
 
     const fetchData = async () => {
         const data = await getData(1);

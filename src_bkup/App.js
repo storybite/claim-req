@@ -3,7 +3,8 @@ import ClaimList from "./components/list/ClaimList";
 import comm from "./module/common";
 import { useEffect, useState } from "react";
 import { getData, postData, putData } from "./module/fetch";
-import Claim from './components/claim/Claim';
+import Form from "./components/form/Form";
+import Account from "./components/account/Account";
 
 let save;
 
@@ -13,19 +14,11 @@ function App() {
     const [formData, setFormData] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [formCount, setFormCount] = useState(0);
-    const [isFiltered, setIsFiltered] = useState(false);
 
     useEffect(() => {
         setIsLoaded(false);
         fetchData();
     }, []);
-
-    useEffect(() => {
-        if(isFiltered && formData) {
-            setIsFiltered(false);
-            formDataHandler(formData.id)
-        }
-    }, [isFiltered]);
 
     
     const fetchData = async () => {
@@ -37,13 +30,10 @@ function App() {
         setIsLoaded(true);
     
         setFormCount(prev=>prev+1)    
-      
     };
 
     const filterReqData = async (name, accidentDate, result) => {
-        setIsLoaded(false);
         let filteredList = await getData();
-        setIsLoaded(true);
         if (filteredList == null) return
         
         filteredList = filteredList.filter(item=> name.length == 0 || item.custName == name)
@@ -51,7 +41,6 @@ function App() {
         filteredList = filteredList.filter(item=> result.length == 0 || item.result == result)
         
         setReqData(filteredList);
-        setIsFiltered(true);
     }
 
     const getMaxNo = () => {
@@ -81,12 +70,12 @@ function App() {
                 onFormDataHandler={formDataHandler}
                 onFilterReqData={filterReqData}
             ></ClaimList>
-            <Claim
+            <Form
                 formData={formData}
                 onFetchData={fetchData}
                 onMaxNo={getMaxNo}
                 onFormDataHandler={formDataHandler}
-                //formCount={formCount}
+                formCount={formCount}
             />
         </>
     );
