@@ -4,7 +4,7 @@ import comm from "./module/common";
 import { useEffect, useState } from "react";
 import { getData, postData, putData } from "./module/fetch";
 import Claim from './components/claim/Claim';
-
+import ProgressBar from "./components/UI/ProgressBar";
 let save;
 
 //git test1
@@ -13,10 +13,11 @@ function App() {
     const [claimData, setClaimData] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isFiltered, setIsFiltered] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        setIsLoaded(false);
         fetchData();
+        setTimeout(()=>setIsMounted(true), 500)
     }, []);
 
     useEffect(() => {
@@ -33,12 +34,12 @@ function App() {
         } else {
             setReqData(data);
         }
-        setIsLoaded(true);
+        setIsLoaded(true)
     };
 
     const filterReqData = async (name, accidentDate, result) => {
         setIsLoaded(false);
-        let filteredList = await getData();
+        let filteredList  = await getData();
         setIsLoaded(true);
         if (filteredList == null) return
         
@@ -88,7 +89,8 @@ function App() {
     };
 
     let content = (
-        <>
+        <>  
+            {!isLoaded && isMounted && <ProgressBar/>}
             <ClaimList
                 claimList={reqData}
                 onFormDataHandler={formDataHandler}
@@ -101,15 +103,16 @@ function App() {
                 onFormDataHandler={formDataHandler}
                 onSaveData={saveData}
                 onDeleteData={deleteData}
-            />
+            />            
         </>
-    );
-
-    if (!isLoaded) {
-        content = <h1 style={{ textAlign: "center" }}>Loading...</h1>;
+    ); 
+    
+    if(!isMounted){
+        return <ProgressBar/>
+    } else {
+        return content;
     }
 
-    return content;
 }
 
 export default App;

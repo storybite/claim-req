@@ -1,4 +1,4 @@
-import styles from "./Claim.module.css"
+import styles from "./Claim.module.css";
 import AccidentRadio from "../accident/AccidentRadio";
 import DsasName from "../accident/DsasName";
 import KCDCt from "../kcd/KCDCt";
@@ -14,6 +14,7 @@ import Account from "../account/Account";
 import Insured from "../cust/Insured";
 import Panel from "../UI/Panel";
 import Label from "../UI/Label";
+import Alert from "../../module/alert";
 
 function formatDate(date) {
     const year = date.getFullYear();
@@ -33,51 +34,59 @@ const initData = {
     kcd: ["", "", "", ""],
     hospitalName: "",
     claimResn: { tong: false, hosp: false, oper: false, dead: false },
-    accountId : "",
-    accidentDetails : "",
+    accountId: "",
+    accidentDetails: "",
     result: "",
-    stopCascading : false
+    stopCascading: false,
 };
 
 const Claim = (props) => {
     const reducer = (prev, action) => {
         // console.log("reducer prev.kcd " + prev.kcd + ", action.propApplied " + action.propApplied);
-        let stopCascading = action.stopCascading == null ? false : action.stopCascading ;
+        let stopCascading =
+            action.stopCascading == null ? false : action.stopCascading;
         if (action.propApplied) {
             return props.claimData == null
-                ? { ...initData, no: props.onMaxNo() + 1, stopCascading: stopCascading}
-                : { ...props.claimData, stopCascading: stopCascading} ;
+                ? {
+                      ...initData,
+                      no: props.onMaxNo() + 1,
+                      stopCascading: stopCascading,
+                  }
+                : { ...props.claimData, stopCascading: stopCascading };
         } else {
-            return { ...prev, ...action.entry};
+            return { ...prev, ...action.entry };
         }
     };
 
     const [claimData, dispatch] = useReducer(reducer, initData);
+    const [isCover, setIsCover] = useState(false);
 
     useEffect(() => {
         console.log("useEffect befo");
         dispatch({ propApplied: true, formData: props.claimData });
         console.log("useEffect aftr");
-    //}, [props.claimData, props.formCount]);
+        //}, [props.claimData, props.formCount]);
     }, [props.claimData]);
 
     const updateReqDataHandler = useCallback((dict) => {
         console.log("updateReqaDataHandler dict==> befo ", dict);
         const [key, val] = Object.entries(dict)[0];
-        dispatch({ propApplied: false, entry: { [key]: val }});
+        dispatch({ propApplied: false, entry: { [key]: val } });
         console.log("updateReqaDataHandler dict==> aftr ", dict);
     }, []);
 
     const updateKcdHandler = useCallback((dict) => {
         console.log("updateKcdHandler dict==> befo ", dict);
-        dispatch({ propApplied: false, entry: {...dict}});
+        dispatch({ propApplied: false, entry: { ...dict } });
         console.log("updateKcdHandler dict==> aftr ", dict);
     }, []);
 
     const submitHandler = async (evt) => {
         evt.preventDefault();
-        props.onSaveData({...claimData})       
-        alert("성공적으로 저장되었습니다.") 
+        props.onSaveData({ ...claimData });
+
+        //alert("성공적으로 저장되었습니다.")
+        Alert("성공적으로 저장되었습니다.");
     };
 
     const deleteHandler = async (evt) => {
@@ -85,34 +94,47 @@ const Claim = (props) => {
             alert("저장되지 않은 건입니다.");
             return;
         }
-        props.deleteData({...claimData})       
+        props.deleteData({ ...claimData });
         alert("성공적으로 삭제되었습니다.");
     };
 
+    // const clearHandler = (evt) => {
+    //     props.onFormDataHandler(null);
+    // };
+
     const clearHandler = (evt) => {
-        props.onFormDataHandler(null);
+        //setIsCover(true);
+
+        setIsCover((prev=>!prev))
+
+        // setTimeout(() => {
+        //     props.onFormDataHandler(null);
+        //     setIsCover(false);
+        // }, 500);
     };
 
     console.log("befo return formData: " + claimData);
 
     //console.log("befo return formData.kcd: " + formData.kcd);
-    let content = ( 
+    let content = (
         <form>
-            <div className={styles.no}>{`보험금 신청서 (신청번호: ${claimData.no}번)`}</div>
+            <div
+                className={styles.no}
+            >{`보험금 신청서 (신청번호: ${claimData.no}번)`}</div>
             <Panel type="box1">
-                <Panel type="line" style={{backgroundColor:"transparent"}}>
+                <Panel type="line" style={{ backgroundColor: "transparent" }}>
                     <Insured
                         data={claimData.custName}
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
-                <Panel type="line" style={{backgroundColor:"white"}}>
+                <Panel type="line" style={{ backgroundColor: "white" }}>
                     <AccidentRadio
                         data={claimData.accidentKind}
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
-                <Panel type="line" >
+                <Panel type="line">
                     <AccidentDate
                         data={claimData.accidentDate}
                         onUpdateReqData={updateReqDataHandler}
@@ -127,7 +149,7 @@ const Claim = (props) => {
                         onUpdateReqData={updateKcdHandler}
                     />
                 </Panel>
-                <Panel type="line" style={{backgroundColor:"white"}}>
+                <Panel type="line" style={{ backgroundColor: "white" }}>
                     <AccidentDetails
                         data={claimData.accidentDetails}
                         onUpdateReqData={updateReqDataHandler}
@@ -143,15 +165,24 @@ const Claim = (props) => {
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
-                <Panel type="line" style={{borderBottom:"none", backgroundColor:"transparent"}}>
-                    <Account 
+                <Panel
+                    type="line"
+                    style={{
+                        borderBottom: "none",
+                        backgroundColor: "transparent",
+                    }}
+                >
+                    <Account
                         data={claimData.accountId}
                         onUpdateReqData={updateReqDataHandler}
                     />
                 </Panel>
             </Panel>
             <div style={{ border: "0px solid black", textAlign: "center" }}>
-                <Button className={buttonStyles.inlineBlock} onClick={submitHandler}>
+                <Button
+                    className={buttonStyles.inlineBlock}
+                    onClick={submitHandler}
+                >
                     신청하기
                 </Button>
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -172,11 +203,16 @@ const Claim = (props) => {
                 </Button>
             </div>
         </form>
-        
-    )
+    );
 
     //return formData.no > 0 && content;
-    return content;
+    return (
+        <div className={`${styles.claim} ${isCover ? styles.cover : styles.open}`}>
+          {content}
+        </div>
+      );
+      
+    // return content;
 };
 
 export default Claim;

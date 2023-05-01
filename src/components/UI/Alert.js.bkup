@@ -1,0 +1,49 @@
+import classes from "./Alert.module.css"
+import ReactDom from "react-dom"
+import Panel from "./Panel"
+import Button from "./Button"
+import {useEffect, useState} from "react"
+
+const Backdrop = (props) => {
+    return <div className={classes.backdrop} onClick={props.onClose}></div>
+}
+
+
+const Overlay = (props) => {
+
+    return (
+        <div className={classes.modal} style={props.style}>
+            <div className={classes.content}>{props.children}</div>
+        </div>
+    )
+}
+
+const Alert = (props) => {
+
+    const [isConfirm, setIsConfirm] = useState(false);
+
+    const closeHandler = () => {
+        setIsConfirm(true);
+    }
+
+    const portalElement = document.getElementById('overlays')
+
+    return (
+        <>
+            {ReactDom.createPortal(<Backdrop onClose={props.onClose}/>, portalElement)}
+            {ReactDom.createPortal(<Overlay style={props.style}>{props.children}</Overlay>, portalElement)}
+            <Panel>
+                <div>{props.msg}</div>
+                <Button type="button" style={{margin:"2rem 0.5rem", backgroundColor:"#aaa"}} onClick={closeHandler}>확인</Button>
+            </Panel>
+        </>
+    )
+}
+
+
+export default Alert;
+
+
+
+
+

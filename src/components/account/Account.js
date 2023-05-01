@@ -2,11 +2,12 @@ import React from "react"
 import Modal from "../UI/Modal";
 import Input from "../UI/Input";
 import Label from "../UI/Label";
+import Table from "../UI/Table";
 import styles from "./Account.module.css"; 
 import { useState, useEffect,memo } from "react";
-//import { deleteData, postData, putData } from "../../module/fetch";
 import { getData } from "../../module/fetch";
 import AddAccount from "./AddAccount";
+
 
 //git test
 const Account = (props) => {
@@ -24,7 +25,7 @@ const Account = (props) => {
     }, [])
 
     useEffect(()=>{
-        if(props.data.length > 0 && accountList.length > 0) {
+        if(props.data && props.data.length > 0 && accountList.length > 0) {
             setAccountData(accountList.filter(item => item.id == props.data)[0]);
         } else {
             setAccountData(null)
@@ -57,9 +58,10 @@ const Account = (props) => {
     };
 
     const rowClickHandler = (paramAccount, evt) => {
-        setAccountData(paramAccount)
+        const fiteredAccount= accountList.filter(item=>item.account == paramAccount)[0]
+        setAccountData(fiteredAccount)
         setIsPopUped(!isPopUped)
-        props.onUpdateReqData({accountId : paramAccount.id})
+        props.onUpdateReqData({accountId : fiteredAccount.id})
     }
 
     const closeHandler = (evt) => {
@@ -82,36 +84,18 @@ const Account = (props) => {
                     //onBlur: blurHandler,
                 }}
             />
+            {console.log('accountList:', accountList)}
             {isPopUped && (
                 <>
-                    <Modal  style={{height:"30%"}}>
-                        <div className={styles.tableWrapper}>
-                            <table className={styles.table}>            
-                                <thead>
-                                    <tr>
-                                        <th>예금주</th>
-                                        <th>은행</th>
-                                        <th>계좌번호</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {accountList.map((row, index) => (
-                                        <tr
-                                            key={index}
-                                            onClick={(evt) => {
-                                                    console.log('row:', row);
-                                                    return rowClickHandler(row, evt)
-                                                }
-                                            }
-                                        >
-                                            <td>{row["name"]}</td>
-                                            <td>{row["bank"]}</td>
-                                            <td>{row["account"]}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                    <Modal>
+                        <Table
+                            head={["계좌변호", "은행", "이름"]}
+                             data={accountList.map(({ account, bank, name }) => ({ account, bank, name }))}                            
+                            // data={accountList}
+                            onRowClickHandler={rowClickHandler}
+                            hidePanel={true}
+                            />
+                        <div style={{height:"20px"}}></div>
                         <AddAccount onAddData={addData} onClose={closeHandler}/>
                     </Modal>
                 </>

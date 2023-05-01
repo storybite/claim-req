@@ -1,24 +1,21 @@
-import React from "react";
-import styles from "./ClaimList.module.css"
+import React, { useEffect, useState } from "react";
+import styles from "./ClaimList.module.css";
 import Search from "./ClaimSearch";
 import Panel from "../UI/Panel";
 
-
-
 const ClaimList = (props) => {
-
-    const rowClickHandler = (firstVal, evt) =>{
-        props.onFormDataHandler(firstVal)
-    }
+    const rowClickHandler = (firstVal, evt) => {
+        props.onFormDataHandler(firstVal);
+    };
 
     const clist = props.claimList;
 
     return (
-        <>  
+        <>
             <Panel type="box2">
-                <Search onFilterReqData={props.onFilterReqData}/>
+                <Search onFilterReqData={props.onFilterReqData} />
                 <div className={styles.tableWrapper}>
-                    <table className={styles.table}>            
+                    <table className={styles.table}>
                         <thead>
                             <tr>
                                 <th>신청번호</th>
@@ -33,10 +30,9 @@ const ClaimList = (props) => {
                                 <tr
                                     key={index}
                                     onClick={(evt) => {
-                                            console.log('row:', row);
-                                            return rowClickHandler(row.id, evt)
-                                        }
-                                    }
+                                        console.log("row:", row);
+                                        return rowClickHandler(row.id, evt);
+                                    }}
                                 >
                                     <td>{row["no"]}</td>
                                     <td>{row["accidentDate"]}</td>

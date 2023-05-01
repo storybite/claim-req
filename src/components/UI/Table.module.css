@@ -1,0 +1,37 @@
+
+.tableWrapper {
+  width: 100%;
+  height: auto;
+  max-height: 65vh;
+  overflow-y: auto; /* This will add da scroll when needed */
+  font-family: Arial, sans-serif;
+}
+
+/* Table.module.css */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.table thead {
+  position: sticky;
+  top: 0px;
+  background-color: #ccc; /* Move background-color from th to thead */
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tr:hover {
+  background-color: #ddd;
+}
+

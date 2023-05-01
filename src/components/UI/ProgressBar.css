@@ -1,0 +1,49 @@
+.progressBar {
+    position: absolute; 
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /*change these sizes to fit into your project */
+    display: block;
+    width: 35px;
+    height: 35px;
+    z-index: 1;
+}
+
+.progressBar hr {
+    position: absolute;
+    border: 0;
+    margin: 0;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    border-radius: 50%;
+    animation: spin 2s ease infinite
+}
+
+.progressBar :first-child {
+    background: #19A68C;
+    animation-delay: -1.5s
+}
+
+.progressBar :nth-child(2) {
+    background: #F63D3A;
+    animation-delay: -1s
+}
+
+.progressBar :nth-child(3) {
+    background: #FDA543;
+    animation-delay: -0.5s
+}
+
+.progressBar :last-child {
+    background: #193B48
+}
+
+@keyframes spin {
+    0%,
+    100% {transform: translate(0)}
+    25% {transform: translate(170%,0)}
+    50% {transform: translate(170%, 170%)}
+    75% {transform: translate(0, 170%)}
+}

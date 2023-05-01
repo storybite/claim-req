@@ -24,12 +24,11 @@ const AccidentDetails = (props) => {
 
     return (
         <>
-            <Panel>
-                <Label htmlFor={NAME} style={{width:"5.3rem"}}>사고난 경위</Label>
+            <Panel style={{ width:"100%" }}>
+                <Label htmlFor={NAME} style={{width:"6.0rem"}}>사고난 경위</Label>
                 <Textarea
-                    style={{margin:"0.2rem"}}
-                    dict={{
-                        cols:"103",
+                    style={{margin:"0.2rem", width:"100%"}}
+                    dict={{                            
                         rows: "3",
                         onChange: inputHandler,
                         onBlur: blurHandler,

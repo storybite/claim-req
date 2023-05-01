@@ -4,6 +4,7 @@ import Modal from "../UI/Modal";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Panel from "../UI/Panel";
+import Table from "../UI/Table";
 
 const debounce = (func, wait) => {
     let timeout;
@@ -124,7 +125,7 @@ const kcds = [
 ];
 
 
-const korName = { code: "표준질병분류코드", name: "질병명" };
+const korName = { code: "c", name: "질병명" };
 
 function KCD(props) {
 
@@ -189,33 +190,13 @@ function KCD(props) {
             {isPopUped && (
                 <>
                     <Modal>
-                        <div className={styles.tableWrapper}>
-                            <table className={styles.table}>
-                                <thead>
-                                    <tr>
-                                        {Object.keys(data[0]).map((key, index) => (
-                                            <th key={index}>{korName[key]}</th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.map((row, index) => (
-                                        //<tr key={index} onClick={rowClickHandler}>
-                                        <tr key={index}
-                                            onClick={(evt) => rowClickHandler(Object.values(row)[0], evt)}
-                                        >
-                                            {Object.values(row).map((value, i) => (
-                                                <td key={i}>{value}</td>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        <Panel>
-                            <Button type="button" style={{margin:"2rem 0.5rem", backgroundColor:"#aaa"}} onClick={closeHandler}>닫기</Button>
-                            <Button type="button" style={{margin:"2rem 0.5rem", backgroundColor:"#aaa"}} onClick={clearHandler}>Clear</Button>
-                        </Panel>
+                        <Table
+                            head={["표준질병코드", "질병명"]}
+                            data={data}
+                            onRowClickHandler={rowClickHandler}
+                            onCloseHandler={closeHandler}
+                            onClearHandler={clearHandler}
+                        />
                     </Modal>
                 </>
             )}

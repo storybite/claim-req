@@ -5,6 +5,7 @@ import Label from "../UI/Label";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Panel from "../UI/Panel";
+import Table from "../UI/Table";
 import { useState } from "react";
 
 
@@ -79,6 +80,11 @@ const Hospital = (props) => {
         setIsPopUped(false)
     }
 
+    const clearHandler = (evt) => {
+        setIsPopUped(false);
+        setHospitalName("");
+    };
+
     return (
         <>
             <Label htmlFor={NAME}>병원정보</Label>
@@ -94,30 +100,14 @@ const Hospital = (props) => {
             />
             {isPopUped && (
                 <>
-                    <Modal style={{height:"40%"}}>
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    {Object.keys(data[0]).map((key, index) => (
-                                        <th key={index}>{korName[key]}</th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((row, index) => (
-                                    //<tr key={index} onClick={rowClickHandler}>
-                                    <tr key={index}
-                                        onClick={(evt)=>rowClickHandler(Object.values(row)[0], evt)}                                >
-                                        {Object.values(row).map((value, i) => (
-                                        <td key={i}>{value}</td>
-                                    ))}
-                                </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <Panel>
-                            <Button type="button" style={{margin:"2rem 0.5rem"}} onClick={closeHandler}>닫기</Button>
-                        </Panel>                        
+                    <Modal>
+                        <Table
+                            head={["병원명", "주소"]}
+                            data={data}
+                            onRowClickHandler={rowClickHandler}
+                            onCloseHandler={closeHandler}
+                            onClearHandler={clearHandler}
+                            />
                     </Modal>
                 </>
             )}
