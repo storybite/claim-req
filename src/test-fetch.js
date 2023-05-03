@@ -2,6 +2,8 @@ const END_POINT = [
     "https://test-1-db70d-default-rtdb.asia-southeast1.firebasedatabase.app/claim[?].json",
     "https://test-1-db70d-default-rtdb.asia-southeast1.firebasedatabase.app/account[?].json",
 ];
+
+const SPRING_END_POINT = "http://localhost:8080/portal/baseKcds"
 //const uptPoint = "https://test-1-db70d-default-rtdb.asia-southeast1.firebasedatabase.app/movie/${updateKey}.json"
 
 const getData = async (id, index = 0) => {
@@ -83,18 +85,59 @@ const deleteData = async (key, index = 0) => {
     }
 };
 
-const accountList = [
-    { id: null, name: "이승우", bank: "우리은행", account: "01-0001-12345" },
-    { id: null, name: "이승우", bank: "국민은행", account: "02-0002-67890" },
-    { id: null, name: "음현아", bank: "제일은행", account: "03-0001-12345" },
-    { id: null, name: "음현아", bank: "외환은행", account: "04-0002-67890" },
-];
+const getSpringData = async (inptJson) => {
+    const endPoint = SPRING_END_POINT;
+    
+    console.log("endPoint >> ", endPoint);
 
-try {
-    accountList.forEach(async (item) => {
-        item.id = await postData(item, 1);
-        await putData(item, item.id, 1);
-    });
-} catch (e) {
-    console.log(e.message);
-}
+    let httpMessage = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inptJson)
+    }
+
+    const response = await fetch(endPoint, httpMessage);
+
+    if (!response.ok) {
+        throw Error("response error");
+    }
+
+    let jsonData = await response.json();
+
+    if (jsonData == null) {
+        return [];
+    }
+
+    jsonData = Object.values(jsonData);
+
+    console.log("jsonData:", jsonData);
+
+    return jsonData;
+};
+
+// const accountList = [
+//     { id: null, name: "이승우", bank: "우리은행", account: "01-0001-12345" },
+//     { id: null, name: "이승우", bank: "국민은행", account: "02-0002-67890" },
+//     { id: null, name: "음현아", bank: "제일은행", account: "03-0001-12345" },
+//     { id: null, name: "음현아", bank: "외환은행", account: "04-0002-67890" },
+// ];
+
+// try {
+//     accountList.forEach(async (item) => {
+//         item.id = await postData(item, 1);
+//         await putData(item, item.id, 1);
+//     });
+// } catch (e) {
+//     console.log(e.message);
+// }
+
+
+const rslt = getSpringData({
+    stddData : "20220101",
+    dtalKcd : "A30-A49"
+});
+
+rslt.then(item=>console.log('item:', item))
+

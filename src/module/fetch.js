@@ -2,6 +2,11 @@ const END_POINT = [
     "https://test-1-db70d-default-rtdb.asia-southeast1.firebasedatabase.app/claim[?].json",
     "https://test-1-db70d-default-rtdb.asia-southeast1.firebasedatabase.app/account[?].json",
 ];
+
+const SPRING_END_POINT = "http://localhost:8080/portal/baseKcds"
+
+
+
 //const uptPoint = "https://test-1-db70d-default-rtdb.asia-southeast1.firebasedatabase.app/movie/${updateKey}.json"
 
 export const getData = async (index = 0) => {
@@ -80,3 +85,35 @@ export const deleteData = async (key, index = 0) => {
 };
 
 
+
+export const getSpringData = async (inptJson) => {
+    const endPoint = SPRING_END_POINT;
+    
+    console.log("endPoint >> ", endPoint);
+
+    let httpMessage = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inptJson)
+    }
+
+    const response = await fetch(endPoint, httpMessage);
+
+    if (!response.ok) {
+        throw Error("response error");
+    }
+
+    let jsonData = await response.json();
+
+    if (jsonData == null) {
+        return [];
+    }
+
+    jsonData = Object.values(jsonData);
+
+    console.log("jsonData:", jsonData);
+
+    return jsonData;
+};

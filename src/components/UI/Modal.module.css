@@ -10,10 +10,11 @@
   
   .modal {
     position: fixed;
-    top: 10vh;
-    left: 5%;
-    width: 90%;
+    top: 50%;
+    left: 50%;
+    /* width: 90%; */
     height: auto;
+    transform: translate(-50%, -50%);
     /* overflow-y: auto;  */
     background-color: white;
     padding: 1rem;
@@ -23,7 +24,7 @@
     animation: slide-down 300ms ease-out forwards;
   }
   
-  @media (min-width: 768px) {
+  /* @media (min-width: 768px) {
     .modal {
       width: 40rem;
       left: calc(50% - 20rem);
@@ -39,4 +40,4 @@
       opacity: 1;
       transform: translateY(0);
     }
-  }
+  } */

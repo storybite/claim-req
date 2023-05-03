@@ -1,12 +1,29 @@
 import { useEffect, useState, useRef, memo, useReducer } from "react";
 import KCD from "./KCD";
 import Label from "../UI/Label";
+import { getSpringData } from "../../module/fetch";
 
 const KCDCt = (props) => {
 
     console.log("KCDContainer props.data" + props.data)
 
+    const [lClassData, setLClassData] = useState("");
     const [kcdGroup, setKcdGroup] = useState([]);
+
+    useEffect(()=>{
+        const fetchData = async() => {
+            const data = await getSpringData({stddDate : null, dtalKcd: ""});
+            if (data == null) {
+            } else {
+                let lClass = data.map(item=>{return {...item, classCode:"대분류"}})
+                lClass = lClass.map(item=>{return { korName: item['korName'],  dtalKcd: item['dtalKcd']}})
+                setLClassData(lClass);
+            }
+            //console.log('lClass:', lClass);
+        }
+        fetchData();
+    }, [])
+
     
     useEffect(() => {
         setKcdGroup(props.data)
@@ -30,18 +47,24 @@ const KCDCt = (props) => {
     };
 
     return (
-        <>
-            <Label>질병코드</Label>
-            <span>
-                {Array.from({ length: 4 }, (_, index) => (
-                    <KCD
-                        key={index}
-                        itemIndex={index}
-                        data={kcdGroup[index]}
-                        onUpdateKcdGroup={updateKcdGroupHandler}
-                    />
-                ))}
-            </span>
+        <>        
+            {lClassData && (
+                <>  
+                    <Label>질병코드</Label>
+                    <span>
+                        {Array.from({ length: 4 }, (_, index) => (
+                            <KCD
+                                key={index}
+                                itemIndex={index}
+                                data={kcdGroup[index]}
+                                lClassData={lClassData}
+                                onUpdateKcdGroup={updateKcdGroupHandler}
+                            />
+                        ))}                    
+                    </span>
+                </>
+                )
+            }
         </>
     );
 };
