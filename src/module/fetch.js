@@ -3,7 +3,8 @@ const END_POINT = [
     "https://test-1-db70d-default-rtdb.asia-southeast1.firebasedatabase.app/account[?].json",
 ];
 
-const SPRING_END_POINT = "http://localhost:8080/portal/baseKcds"
+// const SPRING_END_POINT = "http://localhost:8080/portal/baseKcds"
+const SPRING_END_POINT = "http://upmootong.com/portal/baseKcds"
 
 
 
